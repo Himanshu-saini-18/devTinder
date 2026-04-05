@@ -1,25 +1,31 @@
 const express = require("express");
 
 const app = express();
-const {adminAuth, userAuth} = require("./middlewares/auth");
-app.use("/admin", adminAuth);
 
+// app.use("/",(err,req,res,next)=>{
+//      res.status(400).send("something went wrong");
+// })
 
-app.post("/user/login",(req,res)=>{
-     res.send("user Loggedin");
-})
-app.get("/user",userAuth,(req,res)=>{
-     res.send("user details");
-})
-app.get("/admin/getAllData", (req, res) => {
-  res.send("All data send");
+app.get("/getUserData",(req,res)=>{
+ try{
+       throw new Error("fhcghvke3jf")
+     res.send("User data sent");
+ }catch(err){
+     res.status(500).send("something went wrong contact to support team");
+ }
+   
+
+   
 });
 
+app.use("/",(err,req,res,next)=>{
+     if(err){
+             res.status(400).send("something went wrong");
+     }
+  
+})
 
 
-app.get("/admin/deleteUser", (req, res) => {
-  res.send("Delete User");
-});
 
 app.listen(7777, () => {
   console.log("Server is running on http://localhost:7777");
