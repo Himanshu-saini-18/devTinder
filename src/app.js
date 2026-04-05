@@ -1,32 +1,31 @@
 const express = require("express");
-
+const connectDB = require("./config/database");
+const User = require("./models/user");
 const app = express();
 
-// app.use("/",(err,req,res,next)=>{
-//      res.status(400).send("something went wrong");
-// })
-
-app.get("/getUserData",(req,res)=>{
- try{
-       throw new Error("fhcghvke3jf")
-     res.send("User data sent");
- }catch(err){
-     res.status(500).send("something went wrong contact to support team");
- }
-   
-
-   
+app.post("/signup", async (req, res) => {
+  //Creating a new instance of the user model
+  const user = new User({
+    firstName: "Vishal",
+    lastName: "Saini",
+    emailId: "vishal@gmail.com",
+    password: "vishal@123",
+  });
+  try {
+    await user.save();
+    res.send("User Added successfully");
+  } catch (err) {
+    res.status(400).send("error saving the user" + err.message);
+  }
 });
 
-app.use("/",(err,req,res,next)=>{
-     if(err){
-             res.status(400).send("something went wrong");
-     }
-  
-})
-
-
-
-app.listen(7777, () => {
-  console.log("Server is running on http://localhost:7777");
-});
+connectDB()
+  .then(() => {
+    console.log("Database connection established....");
+    app.listen(7777, () => {
+      console.log("Server is running on http://localhost:7777");
+    });
+  })
+  .catch((err) => {
+    console.log("Database cannot be connected!!");
+  });
