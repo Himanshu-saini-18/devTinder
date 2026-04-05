@@ -1,22 +1,26 @@
 const express = require("express");
 
-const app = express()
+const app = express();
+const {adminAuth, userAuth} = require("./middlewares/auth");
+app.use("/admin", adminAuth);
 
 
-app.get("/user",(req,res)=>{
-    res.send({firstname:"himansh",lastname:"saini"})
+app.post("/user/login",(req,res)=>{
+     res.send("user Loggedin");
 })
-app.post("/user",(req,res)=>{
-    console.log(req.body);
-    res.send("Data successfully saved to the database");
+app.get("/user",userAuth,(req,res)=>{
+     res.send("user details");
 })
-app.delete("/user",(req,res)=>{ 
-    res.send("deleted successfully");
-})
-app.use("/test",(req,res)=>{
-    res.send("hello from the server");
-})
+app.get("/admin/getAllData", (req, res) => {
+  res.send("All data send");
+});
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000')
-})
+
+
+app.get("/admin/deleteUser", (req, res) => {
+  res.send("Delete User");
+});
+
+app.listen(7777, () => {
+  console.log("Server is running on http://localhost:7777");
+});
