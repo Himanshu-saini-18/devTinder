@@ -40,12 +40,16 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      validate(value) {
-        //constom validations this validate is not aplicable on patch/update make some changes for this
-        if (!["male", "female", "others"].includes(value)) {
-          throw new Error("Gender is not valid");
-        }
+      enum:{
+        values:["male","female","other"],
+        message:`{VALUE} is not a valid gender type`
       },
+      // validate(value) {
+      //   //constom validations this validate is not aplicable on patch/update make some changes for this
+      //   if (!["male", "female", "others"].includes(value)) {
+      //     throw new Error("Gender is not valid");
+      //   }
+      // },
     },
     photoUrl: {
       type: String,
@@ -66,6 +70,8 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true },
 ); //donot use createAt updateAt this timestamps handle all
+
+userSchema.index({firstName:1,lastName:1});
 
 userSchema.methods.getJWT = async function () {
   //'this' work only in this function never use arrow function
