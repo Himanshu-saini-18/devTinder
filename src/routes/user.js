@@ -42,7 +42,7 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
       }
       return row.fromUserId;
     });
-    res.json({ connectionRequests });
+    res.json({ data });
   } catch (err) {
     res.status(404).send("Error" + err.message);
   }
