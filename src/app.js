@@ -1,8 +1,14 @@
+require('dotenv').config()
+
 const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+
+
+
+
 //auth middleware
 
 //Thirtparty middleware
